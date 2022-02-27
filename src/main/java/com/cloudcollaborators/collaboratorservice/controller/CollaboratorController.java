@@ -1,25 +1,21 @@
 package com.cloudcollaborators.collaboratorservice.controller;
 
 
+
 import com.cloudcollaborators.collaboratorservice.ProductTeam;
+import com.cloudcollaborators.collaboratorservice.domain.ProductTeams;
+import com.cloudcollaborators.collaboratorservice.repository.CollaboratorRepository;
 import com.cloudcollaborators.collaboratorservice.service.CollaboratorService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.boot.json.JsonParser;
-import org.springframework.boot.json.JsonParserFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +26,10 @@ public class CollaboratorController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private CollaboratorRepository collaboratorRepository;
+
 
     @GetMapping("/{userId}")
     public ResponseEntity<String> getAllTheTeamsInTheOrganization(@PathVariable("userId") String userId) {
@@ -51,15 +51,30 @@ public class CollaboratorController {
         return responseEntity;
     }
 
-    private CollaboratorService collaboratorService;
 
-    public CollaboratorController(CollaboratorService collaboratorService)
-    {
-        this.collaboratorService = collaboratorService;
-    }
+//  public List<ProductTeams> getAllProductTeams() {
+//        List<ProductTeams> myItems = new ArrayList<>();
+//        collaboratorRepository.findAll().forEach(myItems::add);
+//        return myItems;
+//  }
 
-//    @GetMapping("/teamlist")
-//    public Iterable<ProductTeam> list(){
-//        return collaboratorService.list();
+//    public ProductTeams saveTeams(){
+//    ResponseEntity<String> responseEntity = restTemplate.getForEntity("https://jiraapicollab.azurewebsites.net/jira/product-teams", String.class);
+//    ObjectMapper objectMapper = new ObjectMapper();
+//    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//    ProductTeams productTeams = new ProductTeams();
+//    try {
+//        productTeams = objectMapper.readValue(responseEntity.getBody(), ProductTeams.class);
+//
+////           System.out.println("Total teams: " + team.getTotalCount());
+////           System.out.println("Team names :" + Arrays.toString(team.getname().toArray()));
 //    }
+//    catch(JsonProcessingException e)
+//    {
+//        e.printStackTrace();
+//    }
+//    return collaboratorRepository.save(productTeams);
+//
+//}
+
 }
